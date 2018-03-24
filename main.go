@@ -16,12 +16,11 @@ type key int
 
 const (
 	requestIDKey key = 0
-
-	// default version value
-	Version = "0.0"
 )
 
 var (
+	// default version value
+	Version = "0.0"
 
 	// Whether or not to print the current version of the program
 	printVersion = false
