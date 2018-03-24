@@ -16,19 +16,45 @@ type key int
 
 const (
 	requestIDKey key = 0
+
+	// default version value
+	Version = "0.0"
 )
 
 var (
+
+	// Whether or not to print the current version of the program
+	printVersion = false
+
+	// listen address
 	listenAddr string
-	healthy    int32
+
+	// health status
+	healthy int32
 )
+
+func init() {
+
+	flag.StringVar(&listenAddr, "listen-addr", ":5000",
+		"Port for the server to listen on;")
+
+	// Version mode flag
+	flag.BoolVar(&printVersion, "version", false,
+		"Print the current version of this program and exit.")
+}
 
 //
 // Program main
 //
 func main() {
-	flag.StringVar(&listenAddr, "listen-addr", ":5000", "server listen address")
 	flag.Parse()
+
+	// if requested, go ahead and print the version; afterwards exit the
+	// program, since this is all done
+	if printVersion {
+		fmt.Println("libreserver v" + Version)
+		os.Exit(0)
+	}
 
 	logger := log.New(os.Stdout, "http: ", log.LstdFlags)
 	logger.Println("Server is starting...")
