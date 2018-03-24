@@ -18,17 +18,17 @@ endif
 all: build
 
 build:
-	@echo 'Building libreoffice...'
-	@go build
+	@echo 'Building libreserver...'
+	@go build -ldflags '-s -w -X main.Version='${VERSION}
 
 clean:
 	@echo 'Cleaning...'
 	@go clean
 
 install: build
-	@echo installing executable file to /usr/bin/libreoffice
-	@sudo cp lectl /usr/bin/libreoffice
+	@echo installing executable file to /usr/bin/libreserver
+	@sudo cp lectl /usr/bin/libreserver
 
 uninstall: clean
-	@echo removing executable file from /usr/bin/libreoffice
-	@sudo rm /usr/bin/libreoffice
+	@echo removing executable file from /usr/bin/libreserver
+	@sudo rm /usr/bin/libreserver
