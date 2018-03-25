@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"regexp"
 	"sync/atomic"
 	"time"
 )
@@ -53,6 +54,14 @@ func main() {
 	if printVersion {
 		fmt.Println("libreserver v" + Version)
 		os.Exit(0)
+	}
+
+	// safety check the requested port
+	portRegex := regexp.MustCompile(":[0-9]+")
+	results := portRegex.FindString(listenAddr)
+	if results == "" {
+		fmt.Println("Invalid port requested... " + listenAddr)
+		os.Exit(1)
 	}
 
 	logger := log.New(os.Stdout, "http: ", log.LstdFlags)
