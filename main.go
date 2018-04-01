@@ -58,8 +58,7 @@ func main() {
 
 	// safety check the requested port
 	portRegex := regexp.MustCompile(":[0-9]+")
-	results := portRegex.FindString(listenAddr)
-	if results == "" {
+	if portRegex.FindString(listenAddr) == "" {
 		fmt.Println("Invalid port requested... " + listenAddr)
 		os.Exit(1)
 	}
