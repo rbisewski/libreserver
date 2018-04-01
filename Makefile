@@ -1,3 +1,5 @@
+PROJECT_NAME = 'libreserver'
+
 # Version
 VERSION = `date +%y.%m`
 
@@ -18,7 +20,7 @@ endif
 all: build
 
 build:
-	@echo 'Building libreserver...'
+	@echo 'Building ${PROJECT_NAME}...'
 	@go build -ldflags '-s -w -X main.Version='${VERSION}
 
 clean:
@@ -26,9 +28,9 @@ clean:
 	@go clean
 
 install: build
-	@echo installing executable file to /usr/bin/libreserver
-	@sudo cp lectl /usr/bin/libreserver
+	@echo Installing executable file to /usr/bin/${PROJECT_NAME}
+	@sudo cp ${PROJECT_NAME} /usr/bin/${PROJECT_NAME}
 
 uninstall: clean
-	@echo removing executable file from /usr/bin/libreserver
-	@sudo rm /usr/bin/libreserver
+	@echo Removing executable file from /usr/bin/${PROJECT_NAME}
+	@sudo rm -f /usr/bin/${PROJECT_NAME}
