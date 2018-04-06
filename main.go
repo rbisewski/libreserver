@@ -35,7 +35,7 @@ var (
 
 func init() {
 
-	flag.StringVar(&listenAddr, "listen-addr", ":5000",
+	flag.StringVar(&listenAddr, "listen-addr", "5000",
 		"Port for the server to listen on;")
 
 	// Version mode flag
@@ -57,7 +57,7 @@ func main() {
 	}
 
 	// safety check the requested port
-	portRegex := regexp.MustCompile(":[0-9]+")
+	portRegex := regexp.MustCompile("^[0-9]+$")
 	if portRegex.FindString(listenAddr) == "" {
 		fmt.Println("Invalid port requested... " + listenAddr)
 		os.Exit(1)
@@ -75,7 +75,7 @@ func main() {
 	}
 
 	server := &http.Server{
-		Addr:         listenAddr,
+		Addr:         ":" + listenAddr,
 		Handler:      tracing(nextRequestID)(logging(logger)(router)),
 		ErrorLog:     logger,
 		ReadTimeout:  5 * time.Second,
