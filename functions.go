@@ -5,19 +5,48 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 	"sync/atomic"
 )
 
 // index ... return the index.html or equivalent
 func index() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		// input validation
 		if r.URL.Path != "/" {
 			http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 			return
 		}
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+
+		// select based on the file type
+		pieces := strings.Split(r.URL.Path, ".")
+		filetype := "txt"
+		if len(pieces) > 1 {
+			filetype = pieces[len(pieces)-1]
+		}
+
+		// handle different file types
+		switch filetype {
+
+		case "htm":
+			w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		case "html":
+			w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		case "xhtml":
+			w.Header().Set("Content-Type", "text/html; charset=utf-8")
+
+		case "txt":
+			w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+		default:
+			w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+		}
+
+		// handle the header
 		w.Header().Set("X-Content-Type-Options", "nosniff")
 		w.WriteHeader(http.StatusOK)
+
+		// TODO: add logic here to read / print file contents
 		fmt.Fprintln(w, "this is a test, consider adding the "+
 			"ability to read text / html files!")
 	})
