@@ -21,7 +21,7 @@ all: build
 
 build:
 	@echo 'Building ${PROJECT_NAME}...'
-	@go build -ldflags '-s -w -X main.Version='${VERSION}
+	@go build -ldflags '-s -w -X main.version='${VERSION}
 
 clean:
 	@echo 'Cleaning...'
