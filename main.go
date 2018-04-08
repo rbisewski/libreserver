@@ -21,7 +21,7 @@ const (
 
 var (
 	// default version value
-	Version = "0.0"
+	version = "0.0"
 
 	// Whether or not to print the current version of the program
 	printVersion = false
@@ -52,7 +52,7 @@ func main() {
 	// if requested, go ahead and print the version; afterwards exit the
 	// program, since this is all done
 	if printVersion {
-		fmt.Println("libreserver v" + Version)
+		fmt.Println("libreserver v" + version)
 		os.Exit(0)
 	}
 
