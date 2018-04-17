@@ -29,24 +29,30 @@ var (
 	// listen address
 	listenAddr string
 
+	// the directory to read from; e.g. /path/to/web/server
+	serverPath string
+
 	// health status
 	healthy int32
 )
 
 func init() {
 
+	flag.BoolVar(&printVersion, "version", false,
+		"Print the current version of this program and exit.")
+
 	flag.StringVar(&listenAddr, "listen-addr", "5000",
 		"Port for the server to listen on;")
 
-	// Version mode flag
-	flag.BoolVar(&printVersion, "version", false,
-		"Print the current version of this program and exit.")
+	flag.StringVar(&serverPath, "server-path", "/var/www/html",
+		"Directory to search for website HTML files.")
 }
 
 //
 // Program main
 //
 func main() {
+
 	flag.Parse()
 
 	// if requested, go ahead and print the version; afterwards exit the
@@ -60,6 +66,13 @@ func main() {
 	portRegex := regexp.MustCompile("^[0-9]+$")
 	if portRegex.FindString(listenAddr) == "" {
 		fmt.Println("Invalid port requested... " + listenAddr)
+		os.Exit(1)
+	}
+
+	// safety check the server path
+	// TODO: use this variable somewhere
+	if serverPath == "" {
+		fmt.Println("Invalid server path requested!")
 		os.Exit(1)
 	}
 
