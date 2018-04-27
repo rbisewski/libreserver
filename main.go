@@ -44,7 +44,7 @@ func init() {
 	flag.StringVar(&listenAddr, "listen-addr", "5000",
 		"Port for the server to listen on;")
 
-	flag.StringVar(&serverPath, "server-path", "/var/www/html",
+	flag.StringVar(&serverPath, "server-path", "/var/www/html/",
 		"Directory to search for website HTML files.")
 }
 

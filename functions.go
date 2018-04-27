@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 	"sync/atomic"
 )
@@ -13,21 +14,20 @@ import (
 func index() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-		// TODO: add proper checks here
-		// input validation
-		if r.URL.Path != "/" {
+		// TODO: add more checks here, consider validating the
+
+		// does the file exist?
+		if _, err := os.Stat(r.URL.Path); os.IsNotExist(err) {
 			http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 			return
 		}
 
-		// select based on the file type
+		// handle different file types
 		pieces := strings.Split(r.URL.Path, ".")
 		filetype := "txt"
 		if len(pieces) > 1 {
 			filetype = pieces[len(pieces)-1]
 		}
-
-		// handle different file types
 		switch filetype {
 
 		case "htm":
