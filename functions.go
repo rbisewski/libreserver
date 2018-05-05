@@ -31,14 +31,17 @@ func index() http.Handler {
 		switch filetype {
 
 		case "htm":
-			w.Header().Set("Content-Type", "text/html; charset=utf-8")
+			fallthrough
 		case "html":
-			w.Header().Set("Content-Type", "text/html; charset=utf-8")
+			fallthrough
 		case "xhtml":
 			w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
+		case "md":
+			fallthrough
 		case "txt":
 			w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+
 		default:
 			w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 		}
