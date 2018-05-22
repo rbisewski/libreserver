@@ -19,7 +19,7 @@ endif
 
 all: build
 
-build:
+build: clean
 	@echo 'Building ${PROJECT_NAME}...'
 	@go build -ldflags '-s -w -X main.version='${VERSION}
 
