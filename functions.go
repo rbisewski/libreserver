@@ -14,7 +14,7 @@ import (
 func index() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-		// TODO: add more checks here, consider validating the
+		// TODO: add more checks here, especially for file reading...
 
 		// does the file exist?
 		if _, err := os.Stat(r.URL.Path); os.IsNotExist(err) {
@@ -43,9 +43,16 @@ func index() http.Handler {
 		w.Header().Set("X-Content-Type-Options", "nosniff")
 		w.WriteHeader(http.StatusOK)
 
-		// TODO: add logic here to read / print file contents
-		fmt.Fprintln(w, "this is a test, consider adding the "+
-			"ability to read text / html files!")
+		// TODO: add more logic here to read / print file contents
+		_, err := os.Open(r.URL.Path)
+
+		if err != nil {
+			fmt.Fprintln(w, "The following error has occurred: "+err.Error())
+
+		} else {
+			fmt.Fprintln(w, "this is a test, consider adding the "+
+				"ability to read text / html files!")
+		}
 	})
 }
 
