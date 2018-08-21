@@ -38,3 +38,4 @@ Afterwards the binary and any associated logs will be deleted.
 * Support more addresses than just localhost / 127.0.0.1
 * Add functions to properly handle certificates.
 * Get this to serve HTTPS and HTTP2 content.
+* Add unit tests
