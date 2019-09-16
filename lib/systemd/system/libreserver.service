@@ -1,0 +1,18 @@
+[Unit]
+Description=Libreserver
+After=network.target auditd.service
+
+[Service]
+ExecStartPre=/usr/local/bin/libreserver -version
+ExecStart=/usr/local/bin/libreserver
+ExecReload=/usr/local/bin/libreserver -version
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartPreventExitStatus=255
+Type=simple
+RuntimeDirectory=libreserver
+RuntimeDirectoryMode=0755
+
+[Install]
+WantedBy=multi-user.target

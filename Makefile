@@ -21,16 +21,19 @@ all: build
 
 build: clean
 	@echo 'Building ${PROJECT_NAME}...'
-	@go build -ldflags '-s -w -X main.version='${VERSION}
+	@go build -ldflags '-s -w -X main.version='${VERSION} '-o='${PROJECT_NAME}
 
 clean:
 	@echo 'Cleaning...'
 	@go clean
+	@rm -f ${PROJECT_NAME}
 
 install: build
-	@echo Installing executable file to /usr/bin/${PROJECT_NAME}
-	@sudo cp ${PROJECT_NAME} /usr/bin/${PROJECT_NAME}
+	@echo Installing executable file to /usr/local/bin/${PROJECT_NAME}
+	@sudo cp ${PROJECT_NAME} /usr/local/bin/${PROJECT_NAME}
+	@sudo cp ./lib/systemd/system/${PROJECT_NAME}.service /lib/systemd/system/${PROJECT_NAME}.service
 
 uninstall: clean
-	@echo Removing executable file from /usr/bin/${PROJECT_NAME}
-	@sudo rm -f /usr/bin/${PROJECT_NAME}
+	@echo Removing executable file from /usr/local/bin/${PROJECT_NAME}
+	@sudo rm -f /usr/local/bin/${PROJECT_NAME}
+	@sudo rm -f /lib/systemd/system/${PROJECT_NAME}.service

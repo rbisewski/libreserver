@@ -81,6 +81,7 @@ func main() {
 
 	router := http.NewServeMux()
 	router.Handle("/", index())
+	router.Handle("/metrics", index())
 	router.Handle("/healthz", healthz())
 
 	nextRequestID := func() string {
